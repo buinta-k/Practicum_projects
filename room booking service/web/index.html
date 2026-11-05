@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Бронирование комнат</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="wrap">
+    <header class="top">
+      <div>
+        <h1>Бронирование комнат</h1>
+        <p class="sub">Выбери комнату, посмотри занятость и забронируй даты.</p>
+      </div>
+      <div class="pill" id="serverPill"><span class="dot"></span><span>проверяю сервер…</span></div>
+    </header>
+
+    <main class="layout">
+      <!-- Левая колонка -->
+      <div class="col">
+        <section class="card">
+          <div class="card-head">
+            <h2>Комнаты</h2>
+            <button class="btn-ghost" id="reloadRooms" type="button">Обновить</button>
+          </div>
+          <div id="rooms" class="rooms"></div>
+          <form id="roomForm" class="inline-form">
+            <input id="roomName" type="text" placeholder="Название новой комнаты" maxlength="60" required>
+            <button class="btn-secondary" type="submit">Добавить</button>
+          </form>
+        </section>
+
+        <section class="card">
+          <h2>Новая бронь</h2>
+          <form id="bookingForm">
+            <div class="field">
+              <label for="roomId">Комната</label>
+              <input id="roomId" type="number" min="1" placeholder="ID комнаты" required>
+            </div>
+            <div class="two">
+              <div class="field">
+                <label for="startAt">Заезд</label>
+                <input id="startAt" type="date" required>
+              </div>
+              <div class="field">
+                <label for="endAt">Выезд</label>
+                <input id="endAt" type="date" required>
+              </div>
+            </div>
+            <p class="summary" id="summary"></p>
+            <button class="btn-primary" type="submit" id="submitBtn">Забронировать</button>
+          </form>
+        </section>
+
+        <section class="card">
+          <h2>Свободные комнаты на даты</h2>
+          <form id="searchForm">
+            <div class="two">
+              <div class="field">
+                <label for="searchStart">С</label>
+                <input id="searchStart" type="date" required>
+              </div>
+              <div class="field">
+                <label for="searchEnd">По</label>
+                <input id="searchEnd" type="date" required>
+              </div>
+            </div>
+            <button class="btn-secondary wide" type="submit">Найти</button>
+          </form>
+          <div id="searchResult" class="search-result"></div>
+        </section>
+      </div>
+
+      <!-- Правая колонка -->
+      <div class="col">
+        <section class="card">
+          <div class="card-head">
+            <h2 id="bookingsTitle">Занятость</h2>
+            <span class="muted small" id="calendarRange"></span>
+          </div>
+          <div id="calendar" class="calendar"></div>
+          <div class="cal-legend">
+            <span><i class="sw free"></i>свободно</span>
+            <span><i class="sw busy"></i>занято</span>
+            <span><i class="sw pick"></i>выбрано</span>
+          </div>
+          <div id="bookings" class="bookings">
+            <p class="empty">Выбери комнату, чтобы увидеть её брони.</p>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="card-head">
+            <h2>Прогресс API</h2>
+            <span class="muted small" id="progressCount"></span>
+          </div>
+          <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
+          <ul class="endpoints" id="endpoints"></ul>
+          <p class="muted small">Зелёный — работает, красный — ошибка или ещё не написан, серый — ещё не вызывался.</p>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <div class="toasts" id="toasts"></div>
+  <script src="app.js"></script>
+</body>
+</html>
